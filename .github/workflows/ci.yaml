@@ -1,9 +1,9 @@
-name: CMake Build Matrix
+name: CI/CD
 
 on: [push, pull_request]
 
 env:
-  CMAKE_VERSION: 3.23.0
+  CMAKE_VERSION: 3.8
   NINJA_VERSION: 1.10.2
   BUILD_TYPE: Release
   CCACHE_VERSION: 4.6
@@ -21,11 +21,6 @@ jobs:
             os: windows-latest,
             cc: "cl", cxx: "cl",
             environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-          }
-        - {
-            name: "Windows Latest MinGW", artifact: "Windows-MinGW.7z",
-            os: windows-latest,
-            cc: "gcc", cxx: "g++"
           }
         - {
             name: "Ubuntu Latest GCC", artifact: "Linux.7z",
@@ -89,15 +84,24 @@ jobs:
     - name: Install dependencies (Linux)
       if: ${{ runner.os == 'Linux' }}
       run: |
+        wget -q -O - https://cdn.pvs-studio.com/etc/pubkey.txt | sudo apt-key add -
+        sudo wget -O /etc/apt/sources.list.d/viva64.list https://cdn.pvs-studio.com/etc/viva64.list
         sudo apt-get update -qq
-        sudo apt-get install -y zlib1g-dev libssl-dev qt5-default
+        sudo apt-get install -y zlib1g-dev libssl-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools pvs-studio
+        pvs-studio-analyzer credentials PVS-Studio Free FREE-FREE-FREE-FREE
         
     - name: Install dependencies (macOS)
       if: ${{ runner.os == 'macOS' }}
       run: |
-        brew install openssl zlib qt
-        export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
-        export OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
+        brew install openssl zlib qt5 viva64/pvs-studio/pvs-studio llvm
+        brew upgrade pvs-studio
+        pvs-studio-analyzer credentials PVS-Studio Free FREE-FREE-FREE-FREE
+        sudo xcode-select --reset
+    
+    - name: Install dependencies (Windows)
+      if: ${{ runner.os == 'Windows'}}
+      run: |
+        c:\vcpkg\vcpkg install --recurse openssl
     
     - name: Download ccache
       id: ccache
@@ -127,6 +131,17 @@ jobs:
       run: |
         set(ENV{CC} ${{ matrix.config.cc }})
         set(ENV{CXX} ${{ matrix.config.cxx }})
+
+        if ("${{ runner.os }}" STREQUAL "macOS")
+          set(ENV{PATH} "${PATH}:/usr/local/bin:/usr/local/opt:/usr/local/opt/llvm/bin:/usr/bin")
+          set(ENV{LDFLAGS} "-L/usr/local/opt/llvm/lib")
+          set(ENV{CPPFLAGS} "-I/usr/local/opt/llvm/include")
+          set(ENV{OPENSSL_ROOT_DIR} "/usr/local/opt/openssl")
+        endif()
+
+        if ("${{ runner.os }}" STREQUAL "Windows")
+          set(ENV{OPENSSL_ROOT_DIR} "C:/vcpkg/installed/x64-windows-static")
+        endif()
 
         if ("${{ runner.os }}" STREQUAL "Windows" AND NOT "x${{ matrix.config.environment_script }}" STREQUAL "x")
           execute_process(
@@ -161,7 +176,6 @@ jobs:
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Bad exit status")
         endif()
-
 
     - name: Build
       shell: cmake -P {0}
@@ -239,11 +253,9 @@ jobs:
     - name: Install Strip
       run: cmake --install build --prefix instdir --strip
 
-
     - name: Pack
       working-directory: instdir
       run: cmake -E tar cfv ../${{ matrix.config.artifact }} --format=7zip .
-
 
     - name: Upload
       uses: actions/upload-artifact@v2
@@ -287,11 +299,7 @@ jobs:
         config:
         - {
             name: "Windows Latest MSVC", artifact: "Windows-MSVC.7z",
-            os: ubuntu-latest
-          }
-        - {
-            name: "Windows Latest MinGW", artifact: "Windows-MinGW.7z",
-            os: ubuntu-latest
+            os: windows-latest
           }
         - {
             name: "Ubuntu Latest GCC", artifact: "Linux.7z",
@@ -299,7 +307,7 @@ jobs:
           }
         - {
             name: "macOS Latest Clang", artifact: "macOS.7z",
-            os: ubuntu-latest
+            os: macos-latest
           }
     needs: release
 
