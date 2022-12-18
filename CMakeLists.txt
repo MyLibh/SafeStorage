@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.8)
 project(SafeStorage)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,3 +30,4 @@ endif ()
 
 add_subdirectory(Core)
 add_subdirectory(SafeStorage)
+add_subdirectory(Test)
