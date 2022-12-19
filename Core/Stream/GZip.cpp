@@ -92,10 +92,9 @@ bool gzip_ostreambuf::WriteOutput(bool flush)
     do
     {
         m_z_stream.avail_out = static_cast<uInt>(out.size());
-        m_z_stream.next_out = reinterpret_cast<uint8_t*>(out.data());
+        m_z_stream.next_out = reinterpret_cast<uint8_t*>(out.data()); // -V506
 
-        int res = deflate(&m_z_stream, flush ? Z_FINISH : Z_NO_FLUSH);
-        if (res < 0)
+        if (const auto res = deflate(&m_z_stream, flush ? Z_FINISH : Z_NO_FLUSH); res < 0)
             return false;
 
         size_t output_bytes = out.size() - static_cast<size_t>(m_z_stream.avail_out);

@@ -9,15 +9,15 @@ enum class HeaderType : uint8_t
 {
 	EndOfHeader,         // 0 bytes
 	Comment,
-	CipherID,            // 16 bytes
-	CompressionFlags,    // 4 bytes
+	CipherID,            // 1 byte
+	CompressionFlags,    // 1 bytes
 	MasterSeed,          // 16 bytes
 	TransformSeed,       // 32 bytes
 	TransformRounds,     // 8 bytes
 	EncryptionIV,        // 16 bytes
 	ProtectedStreamKey,
 	StreamStartBytes,    // 32 bytes
-	InnerRandomStreamID, // 4 bytes
+	InnerRandomStreamID, // 1 bytes
 	LastLayer,           // 1 byte
 };
 

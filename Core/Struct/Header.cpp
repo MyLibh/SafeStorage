@@ -9,7 +9,8 @@ namespace core {
 
 bool Header::Read(std::istream& input)
 {
-	input.read(reinterpret_cast<char*>(this), sizeof(uint8_t) + sizeof(uint16_t));
+	input.read(reinterpret_cast<char*>(&type), sizeof(type));
+	input.read(reinterpret_cast<char*>(&length), sizeof(length));
 
 	if (length)
 	{
@@ -22,7 +23,8 @@ bool Header::Read(std::istream& input)
 
 bool Header::Write(std::ostream& output) const
 {
-	output.write(reinterpret_cast<const char*>(this), sizeof(uint8_t) + sizeof(uint16_t));
+	output.write(reinterpret_cast<const char*>(&type), sizeof(type));
+	output.write(reinterpret_cast<const char*>(&length), sizeof(length));
 
 	if (length)
 		output.write(reinterpret_cast<const char*>(value.data()), length);
