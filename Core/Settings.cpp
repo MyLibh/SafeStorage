@@ -71,8 +71,8 @@ bool Settings::Save()
 
 	{ // Timeouts
 		QJsonObject obj;
-		obj["clear_clipboard"] = Settings::timeouts.clear_clipboard.count();
-		obj["lock_db"] = Settings::timeouts.lock_db.count();
+		obj["clear_clipboard"] = static_cast<qint64>(Settings::timeouts.clear_clipboard.count());
+		obj["lock_db"] = static_cast<qint64>(Settings::timeouts.lock_db.count());
 		settings.insert("timeouts", obj);
 	}
 

@@ -2,6 +2,8 @@
 
 #include "Struct/Entry.hpp"
 
+#include <memory>
+
 #include <QAbstractTableModel>
 
 class PasswordsModel : public QAbstractTableModel

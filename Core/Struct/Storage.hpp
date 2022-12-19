@@ -16,9 +16,6 @@ class Storage
 public:
 	Storage();
 
-	template<typename... Args>
-	void AddHeader(Args&&... args) { m_headers.emplace(std::forward<Args>(args)...); }
-
 	[[nodiscard]] std::shared_ptr<PasswordsEntry> GetPasswords() const noexcept { return m_passwords; }
 
 	[[nodiscard]] bool IsLastLayerDecrypted() const noexcept { return m_last_layer_decrypted; }

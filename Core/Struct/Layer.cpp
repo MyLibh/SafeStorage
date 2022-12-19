@@ -7,6 +7,7 @@
 #include "../Crypto/ChaCha20.hpp"
 #include "../Crypto/Util.hpp"
 
+#include <algorithm>
 #include <cassert>
 #include <sstream>
 

@@ -12,6 +12,9 @@
 #include <QMessageBox>
 #include <QSpinBox>
 #include <QTimer>
+#ifdef Q_OS_LINUX
+#include <QThread>
+#endif
 
 enum Pages : int
 {
@@ -43,8 +46,6 @@ MainWindow::MainWindow(QWidget* parent /* = nullptr */)
 
     m_ui->tableView->setItemDelegate(m_row_color_delegate.get());
 }
-
-#pragma region Menu
 
 void MainWindow::OnActionCreateDatabase()
 {
@@ -160,10 +161,6 @@ bool MainWindow::OnCreateLayer(bool is_last /*= false*/)
     return true;
 }
 
-#pragma endregion
-
-#pragma region Show page
-
 void MainWindow::OnPushButtonRemoveEntry()
 {
     const auto select = m_ui->tableView->selectionModel();
@@ -191,8 +188,6 @@ void MainWindow::OnPushButtonShowPasswords()
     m_ui->pushButtonShowPasswords->setText(cur_show ? tr("Show") : tr("Hide"));
     m_ui->tableView->reset();
 }
-
-#pragma endregion
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
 {
@@ -386,8 +381,6 @@ void MainWindow::SetupSettings()
     // Security
 }
 
-#pragma region Timers
-
 void MainWindow::StartCopyTimer()
 {
     if (!core::Settings::timeouts.clear_clipboard.count())
@@ -415,5 +408,3 @@ void MainWindow::StartLockDBTimer()
         SetCurrentPage(Pages::Start);
     });
 }
-
-#pragma endregion
