@@ -2,8 +2,8 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 #include "Key.hpp"
-#include "Crypto/AES.hpp"
-#include "Crypto/Util.hpp"
+#include "AES.hpp"
+#include "Util.hpp"
 
 namespace core {
 

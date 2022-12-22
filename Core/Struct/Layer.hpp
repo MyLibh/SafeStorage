@@ -2,7 +2,7 @@
 
 #include "../Constants.hpp"
 #include "../Crypto/Util.hpp"
-#include "../Key.hpp"
+#include "../Crypto/Key.hpp"
 
 #include <iosfwd>
 #include <memory>

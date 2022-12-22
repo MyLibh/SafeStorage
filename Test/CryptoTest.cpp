@@ -1,6 +1,6 @@
 #include "Crypto/AES.hpp"
 #include "Crypto/ChaCha20.hpp"
-#include "Struct/Obfuscator.hpp"
+#include "Crypto/Obfuscator.hpp"
 #include "Struct/Layer.hpp"
 
 #include <memory>

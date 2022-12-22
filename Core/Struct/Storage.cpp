@@ -3,8 +3,7 @@
 
 #include "Storage.hpp"
 #include "Entry.hpp"
-#include "../Crypto/Cipher.hpp"
-#include "Obfuscator.hpp"
+#include "../Crypto/Obfuscator.hpp"
 #include "../Stream/GZip.hpp"
 #include "../Stream/Hashed.hpp"
 

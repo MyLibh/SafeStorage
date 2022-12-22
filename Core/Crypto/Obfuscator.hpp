@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Crypto/Cipher.hpp"
+#include "Cipher.hpp"
 
 #include <array>
 #include <memory>

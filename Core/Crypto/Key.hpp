@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Constants.hpp"
-#include "Crypto/Types.hpp"
+#include "../Constants.hpp"
+#include "Types.hpp"
 
 #include <array>
 #include <string>

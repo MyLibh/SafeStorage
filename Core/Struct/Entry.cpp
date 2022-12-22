@@ -3,7 +3,7 @@
 
 #include "Entry.hpp"
 
-#include "Obfuscator.hpp"
+#include "../Crypto/Obfuscator.hpp"
 #include "../PasswordChecker.hpp"
 #include "../Util.hpp"
 
