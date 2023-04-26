@@ -9,6 +9,7 @@ enum class CipherId : uint8_t
 {
 	None,
 	AES_256_GCM,
+	GRASSHOPPER_CFB,
 };
 
 enum class KDF : uint8_t

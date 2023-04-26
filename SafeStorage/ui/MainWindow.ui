@@ -2246,7 +2246,7 @@ PlotWidget {
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="pageStart">
      <widget class="QGroupBox" name="groupBoxStart">
@@ -2728,6 +2728,11 @@ PlotWidget {
        <item>
         <property name="text">
          <string>AES GCM 256-bit</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Grasshopper CFB</string>
         </property>
        </item>
       </widget>

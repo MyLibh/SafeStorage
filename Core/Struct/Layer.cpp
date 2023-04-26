@@ -5,6 +5,7 @@
 #include "Header.hpp"
 #include "../Crypto/AES.hpp"
 #include "../Crypto/ChaCha20.hpp"
+#include "../Crypto/Grasshopper.hpp"
 #include "../Crypto/Util.hpp"
 
 #include <algorithm>
@@ -45,8 +46,9 @@ std::unique_ptr<Cipher> Layer::GetCipher() const
 {
 	switch (cipher_id)
 	{
-	case CipherId::AES_256_GCM: return std::make_unique<AES>(MakeFinalKey(), iv);
-	default: assert(false);     return nullptr;
+	case CipherId::AES_256_GCM:     return std::make_unique<AES>(MakeFinalKey(), iv);
+	case CipherId::GRASSHOPPER_CFB: return std::make_unique<Grasshopper>(MakeFinalKey(), iv);
+	default: assert(false);         return nullptr;
 	}
 }
 
