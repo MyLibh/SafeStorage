@@ -24,6 +24,7 @@ sha256_t Key::Transform(const sha256_t& seed, const uint64_t rounds) const
 void Key::SetPassword(std::string&& password)
 {
 	CalcSHA256(m_key.key_password, password);
+	ExplicitBZero(password.data(), password.length());
 }
 
 sha256_t Key::CompositeKey::Resolve() const

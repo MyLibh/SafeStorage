@@ -27,6 +27,8 @@ Layer::Layer(std::string&& password,
 	, inner_random_stream_id(random_stream)
 	, is_last(is_last)
 {
+	ExplicitBZero(password.data(), password.length());
+
 	RandBytes(master_seed);
 	RandBytes(iv);
 	RandBytes(transform_seed);

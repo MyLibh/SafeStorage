@@ -31,7 +31,7 @@ bool Storage::UnlockLayer(std::string&& password)
 {
 	auto& layer = m_layers.back();
 	layer.key.SetPassword(std::move(password));
-	password.clear();
+	ExplicitBZero(password.data(), password.length());
 
 	if (!layer.Decrypt(m_read_stream))
 		return false;

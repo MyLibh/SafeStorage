@@ -13,7 +13,7 @@ using namespace core;
 
 TEST(CryptoTest, TestAesEncDec)
 {
-	core::AES aes({}, {});
+	AES aes({}, {});
 	std::stringstream in("plaintext");
 	std::stringstream out;
 	aes.Encrypt(in, out);
@@ -36,7 +36,7 @@ TEST(CryptoTest, TestGrasshoperEncDecBlock)
 
 TEST(CryptoTest, TestGrasshoperEncDec)
 {
-	core::Grasshopper gh({}, {});
+	Grasshopper gh({}, {});
 	std::stringstream in("plaintext");
 	std::stringstream out;
 	gh.Encrypt(in, out);
